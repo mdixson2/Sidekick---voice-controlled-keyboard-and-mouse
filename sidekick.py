@@ -160,7 +160,6 @@ while True:
         #print(parser.state)
         if len(data) == 0:
             break
-        
         if parser.state == "text":
             if trec: # if this returns true model has determined best word candidate
                 ingest(parser.state,commandrec,textrec,alpharec, programrec) 
@@ -178,7 +177,9 @@ while True:
             if arec: # if this returns true model has determined best word candidate
                 ingest(parser.state,commandrec,textrec,alpharec, programrec)                 
         
+        
         elif parser.state == "volume":
+            print("Hello")
             if parser.volumeParser.volumeStarted == True:
                 print(dB)
                 if dB < 35:
@@ -188,6 +189,19 @@ while True:
                 elif dB >= 35:
                     print("WOW")
                     parser.volumeParser.setVolumeCoord(90)
+                    command_buffer = []
+
+        elif parser.state == "horizontal":
+            print("h")
+            if parser.horizontalParser.volumeStarted == True:
+                print(dB)
+                if dB < 35:
+                    print("MOM")
+                    y = parser.horizontalParser.setVolumeCoord(180)
+                    print(y)
+                elif dB >= 35:
+                    print("WOW")
+                    parser.horizontalParser.setVolumeCoord(0)
                     command_buffer = []
 
         else:
