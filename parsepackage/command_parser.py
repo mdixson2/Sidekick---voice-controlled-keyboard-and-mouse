@@ -381,6 +381,36 @@ class CommandParser:
             else:
                 hotKeyPress(["ctrl", "s"])
             command_buffer = []
+        elif command_buffer[0] == "line": 
+            hotKeyPress(["end"])
+            hotKeyPress(["shift", "home"])
+            command_buffer = []
+        elif command_buffer[0] == "copy line": 
+            hotKeyPress(["end"])
+            hotKeyPress(["shift", "home"])
+            if self.os == "Darwin":
+                hotKeyPress(["command", "c"])
+            else:
+                hotKeyPress(["ctrl", "c"])
+            command_buffer = []
+        elif command_buffer[0] == "cut line": 
+            hotKeyPress(["end"])
+            hotKeyPress(["shift", "home"])
+            if self.os == "Darwin":
+                hotKeyPress(["command", "x"])
+            else:
+                hotKeyPress(["ctrl", "x"])
+            command_buffer = []
+        elif command_buffer[0] == "loop": 
+            pyautogui.write("for (int i = 0; i < N; i++) {")
+            hotKeyPress(["enter"])
+            pyautogui.write("continue;")
+            hotKeyPress(["enter"])
+            pyautogui.write("}")
+            hotKeyPress(["enter"])
+            hotKeyPress(["up", "up", "end"])
+            command_buffer = []
+        
         elif command_buffer[0] == "switch":
 
             if self.os == "Darwin":

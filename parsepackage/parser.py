@@ -20,6 +20,7 @@ import platform
 from .mouse_parser import MouseParser
 from .text_parser import TextParser
 from .command_parser import CommandParser
+from .program_parser import ProgramParser
 from .alpha_parser import AlphaParser
 from .volume_parser import VolumeParser
 
@@ -47,12 +48,13 @@ class Parser:
             "at": 1500,
         }
 
-        self.states = ["text", "command", "pause", "alpha", "volume"] #mouse
+        self.states = ["text", "command", "program", "pause", "alpha", "volume"] #mouse
         self.steps = ["one", "two", "three", "four", "five", "six", "seven", "eight"]
 
         self.mouseParser = MouseParser(self.os, self.stepmapping)
         self.textParser = TextParser(self.os, self.stepmapping)
         self.commandParser = CommandParser(self.os, self.stepmapping)
+        self.programParser = ProgramParser(self.os)
         self.alphaParser = AlphaParser(self.os)
         self.volumeParser = VolumeParser(self.os, self.stepmapping)
 
@@ -151,6 +153,10 @@ class Parser:
                     if not stateless:
                         if self.state == "command":
                             self.command_buffer = self.commandParser.evaluate_command(
+                                self.command_buffer
+                            )
+                        elif self.state == "program":
+                            self.command_buffer = self.programParser.evaluate_text(
                                 self.command_buffer
                             )
                         elif self.state == "text":
